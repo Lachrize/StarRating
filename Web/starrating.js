@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260521-1303';
+    var ASSET_VERSION = '20260521-1332';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
@@ -2235,7 +2235,7 @@
         var link = document.createElement('link');
         link.id = 'sr-styles';
         link.rel = 'stylesheet';
-        link.href = 'plugins/starrating/starrating.css?v=' + ASSET_VERSION;
+        link.href = '/StarRating/web/starrating.css?v=' + ASSET_VERSION;
         document.head.appendChild(link);
     }
 

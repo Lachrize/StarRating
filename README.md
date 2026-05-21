@@ -70,9 +70,11 @@ https://raw.githubusercontent.com/Lachrize/StarRating/main/manifest.json
 
 Ensuite, installer `StarRating` depuis le catalogue des plugins, puis redemarrer Jellyfin.
 
-Important : l'installation par depot Jellyfin installe le plugin serveur. Pour afficher les etoiles et l'onglet StarRating dans l'interface principale, Jellyfin Web doit aussi charger `Web/starrating.js` et `Web/starrating.css`. Voir la section "Plugin web" ci-dessous.
+Apres redemarrage, le plugin charge automatiquement son interface web. Aucun fichier JS/CSS n'est a copier manuellement.
 
-### 1. Plugin serveur
+### Installation manuelle avancee
+
+#### 1. Plugin serveur
 
 Creer un dossier StarRating dans le repertoire plugins de Jellyfin, puis copier la DLL :
 
@@ -83,7 +85,7 @@ cp bin/Release/net9.0/Jellyfin.Plugin.StarRating.dll /var/lib/jellyfin/plugins/S
 
 Redemarrer Jellyfin.
 
-### 2. Plugin web
+#### 2. Plugin web
 
 Copier les fichiers web dans Jellyfin Web :
 
@@ -102,7 +104,7 @@ Ajouter les assets dans `/usr/share/jellyfin-web/index.html`, juste avant `</hea
 
 Vider le cache navigateur apres mise a jour (`Cmd + Shift + R` ou `Ctrl + Shift + R`).
 
-### macOS Jellyfin.app
+#### macOS Jellyfin.app
 
 Pour l'application macOS, le chemin Jellyfin Web ressemble a :
 
@@ -110,7 +112,7 @@ Pour l'application macOS, le chemin Jellyfin Web ressemble a :
 /Applications/Jellyfin.app/Contents/Resources/jellyfin-web/
 ```
 
-### Docker
+#### Docker
 
 Avec Docker, monte les fichiers dans le conteneur ou copie-les avec `docker cp`, puis redemarre le conteneur Jellyfin.
 

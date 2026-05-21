@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Reflection;
 using Jellyfin.Api.Extensions;
 using Jellyfin.Plugin.StarRating.Configuration;
 using Jellyfin.Plugin.StarRating.Models;
@@ -35,6 +37,33 @@ public class StarRatingController : ControllerBase
         _userManager = userManager;
         _libraryManager = libraryManager;
         _logger = logger;
+    }
+
+    // ── Assets web embarqués ─────────────────────────────────────────────────
+
+    [HttpGet("web/starrating.js")]
+    [AllowAnonymous]
+    [Produces("application/javascript")]
+    public IActionResult GetScript()
+        => EmbeddedWebAsset("starrating.js", "application/javascript; charset=utf-8");
+
+    [HttpGet("web/starrating.css")]
+    [AllowAnonymous]
+    [Produces("text/css")]
+    public IActionResult GetStyles()
+        => EmbeddedWebAsset("starrating.css", "text/css; charset=utf-8");
+
+    private IActionResult EmbeddedWebAsset(string fileName, string contentType)
+    {
+        var resourceName = $"Jellyfin.Plugin.StarRating.Web.{fileName}";
+        var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+        if (stream is null)
+        {
+            return NotFound();
+        }
+
+        using var reader = new StreamReader(stream);
+        return Content(reader.ReadToEnd(), contentType);
     }
 
     // ── Configuration publique ────────────────────────────────────────────────

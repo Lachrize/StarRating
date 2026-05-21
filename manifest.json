@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.1",
+        "changelog": "Adds automatic Jellyfin Web asset injection so users only need to add this repository URL and install the plugin.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.1.zip",
+        "checksum": "ba0556715936fd9820f573b25db0685774b0fd36e2b49086d16a06c4e1035db2",
+        "timestamp": "2026-05-21T11:32:00Z"
+      },
+      {
         "version": "1.0.0",
         "changelog": "Initial public release.",
         "targetAbi": "10.11.0.0",
