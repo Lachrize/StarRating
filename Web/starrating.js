@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260521-1400';
+    var ASSET_VERSION = '20260521-1625';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
@@ -918,14 +918,22 @@
         return false;
     }
 
-    function findFavoritesTab() {
+    function findHomeReferenceTab() {
         if (!isOnHomePage()) return null;
 
-        var buttons = Array.prototype.slice.call(document.querySelectorAll('button, a'));
-        return buttons.find(function (el) {
+        var buttons = Array.prototype.slice.call(document.querySelectorAll('button, a')).filter(function (el) {
+            return !el.closest('.mainDrawer, .navDrawer, .drawer, .dashboardDocument');
+        });
+        var favorites = buttons.find(function (el) {
             var text = (el.textContent || '').trim();
             return /^Favoris$/i.test(text) || /^Favorites$/i.test(text);
         });
+        if (favorites) return favorites;
+
+        return buttons.find(function (el) {
+            var text = (el.textContent || '').trim();
+            return /^Accueil$/i.test(text) || /^Home$/i.test(text);
+        }) || null;
     }
 
     function buildStarRatingTab(referenceTab) {
@@ -954,16 +962,16 @@
             return;
         }
 
-        var fav = findFavoritesTab();
+        var referenceTab = findHomeReferenceTab();
 
-        if (existingTab && fav && fav.parentNode && fav.parentNode.contains(existingTab)) {
+        if (existingTab && referenceTab && referenceTab.parentNode && referenceTab.parentNode.contains(existingTab)) {
             return;
         }
 
         if (existingTab) existingTab.remove();
-        if (!fav || !fav.parentNode) return;
+        if (!referenceTab || !referenceTab.parentNode) return;
 
-        fav.parentNode.insertBefore(buildStarRatingTab(fav), fav.nextSibling);
+        referenceTab.parentNode.insertBefore(buildStarRatingTab(referenceTab), referenceTab.nextSibling);
     }
 
     function setNativeHomeTabsInactive(inactive) {
@@ -1950,9 +1958,6 @@
             }
         });
 
-        if (document.activeElement && document.activeElement !== document.body && typeof document.activeElement.blur === 'function') {
-            try { document.activeElement.blur(); } catch (_) {}
-        }
     }
 
     function applyBadge(container, value) {

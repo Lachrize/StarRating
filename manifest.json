@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.5",
+        "changelog": "Correction de la perte de focus dans les champs de recherche et affichage de l'onglet StarRating meme sans onglet Favoris/bibliotheque.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.5.zip",
+        "checksum": "165e5e0cdb408ef0ca5ff2026ec2f7cb",
+        "timestamp": "2026-05-21T14:25:00Z"
+      },
+      {
         "version": "1.0.4",
         "changelog": "Correction du menu lateral sur l'onglet StarRating, clarification sur la persistance des notes (starrating.db), note dans l'onglet Outils.",
         "targetAbi": "10.11.0.0",
