@@ -60,6 +60,18 @@ bin/Release/net9.0/Jellyfin.Plugin.StarRating.dll
 
 ## Installation
 
+### Installation depuis un depot Jellyfin
+
+Dans Jellyfin : `Tableau de bord` -> `Plugins` -> `Depots` -> ajouter :
+
+```text
+https://raw.githubusercontent.com/Lachrize/StarRating/main/manifest.json
+```
+
+Ensuite, installer `StarRating` depuis le catalogue des plugins, puis redemarrer Jellyfin.
+
+Important : l'installation par depot Jellyfin installe le plugin serveur. Pour afficher les etoiles et l'onglet StarRating dans l'interface principale, Jellyfin Web doit aussi charger `Web/starrating.js` et `Web/starrating.css`. Voir la section "Plugin web" ci-dessous.
+
 ### 1. Plugin serveur
 
 Creer un dossier StarRating dans le repertoire plugins de Jellyfin, puis copier la DLL :

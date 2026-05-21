@@ -1,0 +1,20 @@
+[
+  {
+    "guid": "a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e",
+    "name": "StarRating",
+    "description": "Permet aux utilisateurs de noter les films et series avec des etoiles, de publier des commentaires et d'importer/exporter leurs donnees.",
+    "overview": "Notes et commentaires communautaires pour Jellyfin",
+    "owner": "Lachrize",
+    "category": "General",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "changelog": "Initial public release.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.0.zip",
+        "checksum": "d8c434c695a7a0469e02feac64fea3c763f15d568f2f43f3e0e79aa974f39d31",
+        "timestamp": "2026-05-21T11:22:00Z"
+      }
+    ]
+  }
+]
