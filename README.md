@@ -10,7 +10,13 @@ Dans Jellyfin : `Tableau de bord` -> `Plugins` -> `Depots` -> ajouter :
 https://raw.githubusercontent.com/Lachrize/StarRating/main/manifest.json
 ```
 
-Ensuite, installer `StarRating` depuis le catalogue des plugins, puis redemarrer Jellyfin.
+Si le catalogue affiche encore l'ancienne version, supprimer le depot, puis le rajouter. Vous pouvez aussi forcer la mise a jour avec ce lien :
+
+```text
+https://raw.githubusercontent.com/Lachrize/StarRating/d72cfd7/manifest.json
+```
+
+Ensuite, installer `StarRating` **version 1.0.2** depuis le catalogue des plugins, puis redemarrer Jellyfin.
 
 Le plugin charge automatiquement son interface web. Rien d'autre a copier.
 
