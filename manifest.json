@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.3",
+        "changelog": "Correction du statut Malfunctioned en declarant les assemblies gerees et en ignorant les dependances natives.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.3.zip",
+        "checksum": "8ae9427e0430bb47dcdb04078a9e56ef",
+        "timestamp": "2026-05-21T11:54:00Z"
+      },
+      {
         "version": "1.0.2",
         "changelog": "Correction de l'installation depuis le depot Jellyfin (checksum MD5) et inclusion des dependances requises.",
         "targetAbi": "10.11.0.0",

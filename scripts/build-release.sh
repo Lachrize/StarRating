@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-VERSION="${1:-1.0.2}"
+VERSION="${1:-1.0.3}"
 DOTNET="${DOTNET:-/opt/homebrew/opt/dotnet@9/libexec/dotnet}"
 STAGING="$ROOT/dist/staging_$VERSION"
 ZIP="$ROOT/dist/StarRating_${VERSION}.zip"
@@ -28,7 +28,14 @@ cat > "$STAGING/meta.json" <<EOF
   "changelog": "Repository install fix and bundled dependencies.",
   "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
   "status": "Active",
-  "autoUpdate": true
+  "autoUpdate": true,
+  "assemblies": [
+    "Jellyfin.Plugin.StarRating.dll",
+    "Microsoft.Data.Sqlite.dll",
+    "SQLitePCLRaw.batteries_v2.dll",
+    "SQLitePCLRaw.core.dll",
+    "SQLitePCLRaw.provider.e_sqlite3.dll"
+  ]
 }
 EOF
 
