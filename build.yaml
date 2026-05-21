@@ -2,7 +2,7 @@
 version: 1
 guid: "a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e"
 name: "StarRating"
-version: "1.0.1"
+version: "1.0.2"
 overview: "Notez et commentez vos médias"
 description: >
   Permet aux utilisateurs de noter les médias avec des étoiles (1-5)

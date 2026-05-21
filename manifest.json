@@ -8,11 +8,19 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.2",
+        "changelog": "Correction de l'installation depuis le depot Jellyfin (checksum MD5) et inclusion des dependances requises.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.2.zip",
+        "checksum": "80aacebc34289ce3e76f6cfc40f408bd",
+        "timestamp": "2026-05-21T12:00:00Z"
+      },
+      {
         "version": "1.0.1",
         "changelog": "Adds automatic Jellyfin Web asset injection so users only need to add this repository URL and install the plugin.",
         "targetAbi": "10.11.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.1.zip",
-        "checksum": "ba0556715936fd9820f573b25db0685774b0fd36e2b49086d16a06c4e1035db2",
+        "checksum": "a98cbd9b735bc1b7eb82d4f550c800c9",
         "timestamp": "2026-05-21T11:32:00Z"
       },
       {
@@ -20,7 +28,7 @@
         "changelog": "Initial public release.",
         "targetAbi": "10.11.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.0.zip",
-        "checksum": "d8c434c695a7a0469e02feac64fea3c763f15d568f2f43f3e0e79aa974f39d31",
+        "checksum": "ada28bff97eb072b25b7e13218e1af13",
         "timestamp": "2026-05-21T11:22:00Z"
       }
     ]
