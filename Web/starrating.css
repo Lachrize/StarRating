@@ -371,12 +371,18 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 10050;
+    /* Sous le menu latéral Jellyfin (~1100+) ; les clics sur l'en-tête passent à travers */
+    z-index: 100;
+    pointer-events: none;
     overflow: auto;
     background: #101827;
     padding: 28px 5vw 48px;
     color: #e8edf5;
     box-sizing: border-box;
+}
+
+.sr-home-page > * {
+    pointer-events: auto;
 }
 
 .sr-home-header {
@@ -588,6 +594,17 @@
 }
 
 /* ── Outils (export / import) ─────────────────────────────────────────────── */
+.sr-data-note {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #b8c4d6;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
 .sr-tools-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

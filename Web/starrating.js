@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260521-1332';
+    var ASSET_VERSION = '20260521-1400';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
@@ -99,7 +99,8 @@
             adminTabReviews: 'Modération',
             adminEmpty: 'Aucun avis à modérer.',
             adminDelete: 'Supprimer',
-            adminPurge: 'Tout purger pour ce média'
+            adminPurge: 'Tout purger pour ce média',
+            dataPersistenceNote: 'Vos notes sont enregistrées sur le serveur Jellyfin (fichier starrating.db), pas dans le dépôt du plugin. Supprimer ou réajouter le dépôt ne les efface pas. Pour repartir à zéro : désinstallez le plugin, supprimez starrating.db dans le dossier de données Jellyfin, puis réinstallez.'
         }
     };
 
@@ -1040,6 +1041,7 @@
             '</section>' +
 
             '<section class="sr-home-tab-panel sr-hidden" data-panel="tools">' +
+                '<p class="sr-data-note">' + t('dataPersistenceNote') + '</p>' +
                 '<div class="sr-tools-container">' +
                     '<div class="sr-tool-card">' +
                         '<h3>' + t('export') + '</h3>' +
@@ -1205,8 +1207,11 @@
         if (target.closest('#starrating-home-page') || target.closest('.sr-home-tab')) return;
         if (target.closest('select, option, input, textarea, label, .sr-tools-container, .sr-tool-card, .sr-format-toggle')) return;
 
+        /* Bouton menu / en-tête : ne pas fermer l'onglet ni bloquer le tiroir latéral */
+        if (target.closest('.skinHeader') && !target.closest('.headerTabs button, .headerTabs a')) return;
+
         var nativeTab = target.closest('.headerTabs button, .headerTabs a');
-        var menuItem  = target.closest('.navMenuOption, .touch-menu-la, .mainDrawer, a[href^="#!/"], a[href^="#/"]');
+        var menuItem  = target.closest('.navMenuOption, .mainDrawer a[href^="#!/"], .mainDrawer a[href^="#/"]');
 
         if (nativeTab || menuItem) {
             hideStarRatingHome();

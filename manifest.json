@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.4",
+        "changelog": "Correction du menu lateral sur l'onglet StarRating, clarification sur la persistance des notes (starrating.db), note dans l'onglet Outils.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.4.zip",
+        "checksum": "4f6677b471d9cb74b346888fe2b4e8e4",
+        "timestamp": "2026-05-21T14:05:00Z"
+      },
+      {
         "version": "1.0.3",
         "changelog": "Correction du statut Malfunctioned en declarant les assemblies gerees et en ignorant les dependances natives.",
         "targetAbi": "10.11.0.0",
