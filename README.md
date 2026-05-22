@@ -12,9 +12,11 @@ https://raw.githubusercontent.com/Lachrize/StarRating/main/manifest.json
 
 Si le catalogue affiche encore l'ancienne version, supprimer le depot, puis le rajouter.
 
-Ensuite, installer `StarRating` **version 1.0.6** (ou plus recente) depuis le catalogue des plugins, puis redemarrer Jellyfin.
+Ensuite, installer `StarRating` **version 1.0.7** (ou plus recente) depuis le catalogue des plugins, puis redemarrer Jellyfin.
 
 Le plugin charge automatiquement son interface web. Rien d'autre a copier.
+
+L'interface StarRating utilise les variables de theme Jellyfin quand elles sont disponibles, afin de s'adapter aux CSS personnalises comme ElegantFin.
 
 ## Ou sont stockees vos notes ?
 

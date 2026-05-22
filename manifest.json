@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.7",
+        "changelog": "Adaptation visuelle aux themes Jellyfin et CSS personnalises (dont ElegantFin) avec variables de theme et responsive ameliore.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.7.zip",
+        "checksum": "192e8da46c91f9ff466cbcf9f38d3c8e",
+        "timestamp": "2026-05-22T09:15:00Z"
+      },
+      {
         "version": "1.0.6",
         "changelog": "Correction renforcee de la perte de focus pendant les recherches Jellyfin et versionnement du cache des assets web.",
         "targetAbi": "10.11.0.0",
