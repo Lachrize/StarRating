@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260521-1625';
+    var ASSET_VERSION = '20260521-1635';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
@@ -1960,6 +1960,18 @@
 
     }
 
+    function isEditableElement(el) {
+        if (!el || el === document.body) return false;
+        if (el.isContentEditable) return true;
+        if (!el.matches) return false;
+        return el.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]');
+    }
+
+    function isJellyfinInputActive() {
+        var active = document.activeElement;
+        return isEditableElement(active) && !active.closest('#starrating-section, #starrating-home-page, .sr-confirm-overlay');
+    }
+
     function applyBadge(container, value) {
         if (!container) return;
 
@@ -2049,6 +2061,8 @@
     }
 
     function refreshPosterBadges() {
+        if (isJellyfinInputActive()) return;
+
         var links = document.querySelectorAll('a[href*="id="]');
         var unknownIds = [];
 
@@ -2086,6 +2100,8 @@
     }
 
     function refreshPosterBadgesApply() {
+        if (isJellyfinInputActive()) return;
+
         var links = document.querySelectorAll('a[href*="id="]');
 
         links.forEach(function (link) {
@@ -2122,6 +2138,8 @@
     var burstId = null;
 
     function checkAndInject() {
+        if (isJellyfinInputActive()) return;
+
         if (window.location.href !== lastUrl) {
             lastUrl = window.location.href;
         }
@@ -2173,6 +2191,8 @@
         }, true);
 
         function onNavigationChange() {
+            if (isJellyfinInputActive()) return;
+
             lastUrl = '';
             if (starRatingHomeActive) hideStarRatingHome();
             cleanupNavigationArtifacts();

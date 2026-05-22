@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.6",
+        "changelog": "Correction renforcee de la perte de focus pendant les recherches Jellyfin et versionnement du cache des assets web.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.6.zip",
+        "checksum": "8ca5b842f0d086a5bc344c621ca45e1a",
+        "timestamp": "2026-05-21T14:35:00Z"
+      },
+      {
         "version": "1.0.5",
         "changelog": "Correction de la perte de focus dans les champs de recherche et affichage de l'onglet StarRating meme sans onglet Favoris/bibliotheque.",
         "targetAbi": "10.11.0.0",

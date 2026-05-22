@@ -13,6 +13,7 @@ public partial class WebAssetInjectionService : IHostedService
 {
     private const string StartMarker = "<!-- StarRating plugin assets start -->";
     private const string EndMarker = "<!-- StarRating plugin assets end -->";
+    private const string AssetVersion = "1.0.6";
     private readonly ILogger<WebAssetInjectionService> _logger;
 
     public WebAssetInjectionService(ILogger<WebAssetInjectionService> logger)
@@ -49,8 +50,8 @@ public partial class WebAssetInjectionService : IHostedService
         var cleaned = AssetBlockRegex().Replace(html, string.Empty);
         var block = Environment.NewLine +
             StartMarker + Environment.NewLine +
-            "<link rel=\"stylesheet\" href=\"/StarRating/web/starrating.css?v=1.0.0\">" + Environment.NewLine +
-            "<script defer src=\"/StarRating/web/starrating.js?v=1.0.0\"></script>" + Environment.NewLine +
+            $"<link rel=\"stylesheet\" href=\"/StarRating/web/starrating.css?v={AssetVersion}\">" + Environment.NewLine +
+            $"<script defer src=\"/StarRating/web/starrating.js?v={AssetVersion}\"></script>" + Environment.NewLine +
             EndMarker + Environment.NewLine;
 
         string updated;
