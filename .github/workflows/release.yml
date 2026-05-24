@@ -108,7 +108,17 @@ jobs:
               "targetAbi": "10.11.0.0",
               "changelog": changelog,
               "status": "Active",
-              "autoUpdate": True
+              "autoUpdate": True,
+              # CRITICAL : sans ce champ, Jellyfin scanne récursivement tous les .dll
+              # du dossier plugin et essaie de charger les natives (runtimes/*/e_sqlite3.dll)
+              # comme assemblies .NET → BadImageFormatException → plugin désactivé.
+              "assemblies": [
+                  "Jellyfin.Plugin.StarRating.dll",
+                  "Microsoft.Data.Sqlite.dll",
+                  "SQLitePCLRaw.batteries_v2.dll",
+                  "SQLitePCLRaw.core.dll",
+                  "SQLitePCLRaw.provider.e_sqlite3.dll"
+              ]
           }
           pathlib.Path("$STAGING/meta.json").write_text(json.dumps(meta, indent=2))
           PY
