@@ -1,97 +1,124 @@
-/* ── Variables thème ─────────────────────────────────────────────────────── */
-:root {
-    --sr-accent: var(--theme-primary-color, var(--accent-color, #ffd700));
-    --sr-accent-contrast: var(--theme-accent-text-color, #111827);
-    --sr-page-bg: var(--primary-background-color, var(--background-color, #101827));
-    --sr-surface-bg: var(--dialog-background-color, var(--secondary-background-color, rgba(255,255,255,0.06)));
-    --sr-surface-bg-soft: rgba(255,255,255,0.05);
-    --sr-surface-bg-hover: rgba(255,255,255,0.1);
-    --sr-border: rgba(255,255,255,0.14);
-    --sr-border-soft: rgba(255,255,255,0.08);
-    --sr-text: var(--primary-text-color, #e8edf5);
-    --sr-text-strong: var(--primary-text-color, #fff);
-    --sr-text-muted: var(--secondary-text-color, #a8b1c2);
-    --sr-text-subtle: var(--secondary-text-color, #9aa4b5);
-    --sr-danger: #f88;
-    --sr-danger-bg: rgba(220,50,50,0.2);
-    --sr-radius-sm: 8px;
-    --sr-radius-md: 12px;
-    --sr-radius-lg: 16px;
+/* ──────────────────────────────────────────────────────────────────────────
+   StarRating – Adapté à tous les thèmes Jellyfin (variables CSS héritées)
+   et responsive : mobile, tablette, TV, desktop.
+   ────────────────────────────────────────────────────────────────────────── */
+
+#starrating-section {
+    /* Variables internes — pilotables par n'importe quel thème (ElegantFin, etc.) */
+    --sr-star-color:   var(--theme-primary-color, var(--accent-color, #ffd700));
+    --sr-star-empty:   rgba(127, 127, 127, 0.45);
+    --sr-text:         var(--theme-text-color, inherit);
+    --sr-text-muted:   var(--theme-text-color-secondary, rgba(127, 127, 127, 0.85));
+    --sr-bg-soft:      var(--theme-background-secondary, rgba(127, 127, 127, 0.08));
+    --sr-border:       var(--theme-border-color, rgba(127, 127, 127, 0.2));
+    --sr-button-bg:    var(--theme-primary-color, var(--accent-color, #ffd700));
+    --sr-button-fg:    var(--theme-button-text-color, #111);
+    --sr-radius:       var(--rounding, 8px);
+
+    margin: 1.5em 0;
+    padding: 0 1em;
+    font-family: inherit;
+    color: var(--sr-text);
+    box-sizing: border-box;
 }
 
-/* ── Overlay poster ──────────────────────────────────────────────────────── */
+#starrating-section *,
+#starrating-section *::before,
+#starrating-section *::after {
+    box-sizing: border-box;
+}
+
+#starrating-section h2 {
+    font-size: 1.05em;
+    font-weight: 600;
+    margin: 0 0 0.75em 0;
+    color: inherit;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* ── Badge note sur les affiches ─────────────────────────────────────────── */
 .sr-poster-badge {
     position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.75);
+    top: 6px;
+    left: 6px;
+    background: rgba(0, 0, 0, 0.7);
     border-radius: 6px;
     padding: 2px 6px;
     display: flex;
     align-items: center;
     gap: 3px;
-    font-size: 11px;
+    font-size: 0.72em;
     font-weight: 700;
-    color: var(--sr-accent);
-    z-index: 5;
+    color: var(--theme-primary-color, #ffd700);
+    z-index: 10;
     pointer-events: none;
+    backdrop-filter: blur(4px);
     line-height: 1.4;
 }
+.sr-poster-badge .sr-star { font-size: 0.9em; }
 
-.sr-poster-badge .sr-star {
-    font-size: 10px;
+/* ── Résumé note moyenne ─────────────────────────────────────────────────── */
+.sr-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 1em;
+    padding: 0.7em 1em;
+    background: var(--sr-bg-soft);
+    border: 1px solid var(--sr-border);
+    border-radius: var(--sr-radius);
+    flex-wrap: wrap;
+}
+.sr-summary .sr-avg {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--sr-star-color);
+    line-height: 1;
+}
+.sr-summary .sr-avg-stars { font-size: 1em; }
+.sr-summary .sr-total {
+    font-size: 0.78em;
+    color: var(--sr-text-muted);
 }
 
-/* ── Section détail ──────────────────────────────────────────────────────── */
-#starrating-section {
-    margin: 24px 0;
-    padding: 0 24px;
-    font-family: inherit;
-    color: var(--sr-text);
+.sr-no-reviews,
+.sr-loading {
+    color: var(--sr-text-muted);
+    font-size: 0.85em;
+    font-style: italic;
 }
 
-#starrating-section h2 {
-    font-size: 1.1em;
-    font-weight: 600;
-    margin: 0 0 12px 0;
-    color: var(--sr-text-strong);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-}
-
-/* ── Sélecteur d'étoiles (demi-étoiles) ──────────────────────────────────── */
+/* ── Sélecteur d'étoiles (interactif, demi-étoiles) ──────────────────────── */
 .sr-rating-block {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 0.75em;
+    margin-bottom: 1em;
     flex-wrap: wrap;
 }
-
 .sr-stars-input {
     display: flex;
     gap: 2px;
 }
-
 .sr-star-slot {
     position: relative;
     display: inline-block;
-    width: 34px;
-    height: 34px;
+    width: 1.7em;
+    height: 1.7em;
     cursor: pointer;
+    font-size: 1.6em;
+    line-height: 1;
 }
-
 .sr-star-base {
     display: block;
-    font-size: 32px;
-    line-height: 34px;
-    color: color-mix(in srgb, var(--sr-text-muted) 45%, transparent);
+    line-height: 1;
+    color: var(--sr-star-empty);
     transition: color 0.1s;
     user-select: none;
     pointer-events: none;
 }
-
-.sr-slot-full .sr-star-base { color: var(--sr-accent); }
+.sr-slot-full .sr-star-base { color: var(--sr-star-color); }
 
 .sr-star-half-overlay {
     display: none;
@@ -100,9 +127,8 @@
     left: 0;
     width: 50%;
     overflow: hidden;
-    font-size: 32px;
-    line-height: 34px;
-    color: var(--sr-accent);
+    line-height: 1;
+    color: var(--sr-star-color);
     user-select: none;
     pointer-events: none;
 }
@@ -122,149 +148,97 @@
 .sr-half-btn.sr-half-left  { left: 0; }
 .sr-half-btn.sr-half-right { right: 0; }
 
-/* ── Demi-étoiles dans résumé et cartes de review ────────────────────────── */
-.sr-sh {
-    display: inline-block;
-    position: relative;
-    color: color-mix(in srgb, var(--sr-text-muted) 55%, transparent);
-    font-size: inherit;
-}
-.sr-sh-full { color: var(--sr-accent); }
-.sr-sh-half { color: color-mix(in srgb, var(--sr-text-muted) 55%, transparent); }
-
-.sr-sh-clip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    overflow: hidden;
-    color: var(--sr-accent);
-    display: block;
-    white-space: nowrap;
-}
-
 .sr-rating-label {
     font-size: 0.85em;
     color: var(--sr-text-muted);
 }
 
 .sr-delete-rating-btn {
-    background: none;
+    background: transparent;
     border: 1px solid var(--sr-border);
     color: var(--sr-text-muted);
-    border-radius: 4px;
-    padding: 4px 10px;
+    border-radius: var(--sr-radius);
+    padding: 0.35em 0.8em;
     cursor: pointer;
     font-size: 0.78em;
-    transition: background 0.15s;
+    font-family: inherit;
+    transition: background 0.15s, color 0.15s;
 }
-
 .sr-delete-rating-btn:hover {
-    background: var(--sr-surface-bg-hover);
+    background: var(--sr-bg-soft);
+    color: var(--sr-text);
 }
 
-/* ── Résumé des notes ────────────────────────────────────────────────────── */
-.sr-summary {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 10px 14px;
-    background: var(--sr-surface-bg-soft);
-    border-radius: 8px;
-    border: 1px solid var(--sr-border-soft);
+/* ── Étoiles statiques (résumé, cartes review) ───────────────────────────── */
+.sr-sh {
+    display: inline-block;
+    position: relative;
+    color: var(--sr-star-empty);
+    font-size: inherit;
 }
-
-.sr-summary-main {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.sr-summary .sr-avg {
-    font-size: 2em;
-    font-weight: 700;
-    color: var(--sr-accent);
-    line-height: 1;
-}
-
-.sr-summary .sr-avg-stars {
-    font-size: 1.1em;
-}
-
-.sr-summary .sr-total {
-    font-size: 0.82em;
-    color: var(--sr-text-subtle);
-}
-
-.sr-summary-average-badge {
-    margin-left: auto;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--sr-accent) 16%, transparent);
-    border: 1px solid color-mix(in srgb, var(--sr-accent) 28%, transparent);
-    color: var(--sr-accent);
-    font-size: 0.82em;
-    font-weight: 700;
+.sr-sh-full { color: var(--sr-star-color); }
+.sr-sh-clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: var(--sr-star-color);
+    display: block;
     white-space: nowrap;
 }
 
-/* ── Zone de review ─────────────────────────────────────────────────────── */
+/* ── Formulaire d'avis ───────────────────────────────────────────────────── */
 .sr-review-form {
-    margin-bottom: 24px;
+    margin-bottom: 1.2em;
 }
-
 .sr-review-form textarea {
     width: 100%;
-    min-height: 80px;
-    background: var(--sr-surface-bg);
+    min-height: 4.5em;
+    background: var(--sr-bg-soft);
     border: 1px solid var(--sr-border);
-    border-radius: 6px;
+    border-radius: var(--sr-radius);
     color: var(--sr-text);
-    padding: 10px 12px;
+    padding: 0.7em 0.85em;
     font-size: 0.9em;
     font-family: inherit;
     resize: vertical;
-    box-sizing: border-box;
     transition: border-color 0.2s;
 }
-
 .sr-review-form textarea:focus {
     outline: none;
-    border-color: color-mix(in srgb, var(--sr-accent) 60%, transparent);
+    border-color: var(--sr-star-color);
 }
-
 .sr-review-form textarea::placeholder {
-    color: var(--sr-text-subtle);
+    color: var(--sr-text-muted);
+    opacity: 0.8;
 }
 
 .sr-review-actions {
     display: flex;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 0.5em;
+    margin-top: 0.5em;
     align-items: center;
+    flex-wrap: wrap;
 }
-
 .sr-submit-btn {
-    background: var(--sr-accent);
-    color: var(--sr-accent-contrast);
+    background: var(--sr-button-bg);
+    color: var(--sr-button-fg);
     border: none;
-    border-radius: 5px;
-    padding: 7px 18px;
+    border-radius: var(--sr-radius);
+    padding: 0.5em 1.2em;
     font-size: 0.85em;
     font-weight: 700;
     cursor: pointer;
-    transition: background 0.15s;
+    font-family: inherit;
+    transition: filter 0.15s, opacity 0.15s;
 }
-
-.sr-submit-btn:hover {
-    background: color-mix(in srgb, var(--sr-accent) 84%, white);
-}
+.sr-submit-btn:hover    { filter: brightness(1.1); }
+.sr-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .sr-char-count {
-    font-size: 0.78em;
-    color: var(--sr-text-subtle);
+    font-size: 0.75em;
+    color: var(--sr-text-muted);
     margin-left: auto;
 }
 
@@ -272,604 +246,61 @@
 .sr-reviews-list {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 0.8em;
 }
-
 .sr-review-card {
-    background: var(--sr-surface-bg-soft);
-    border: 1px solid var(--sr-border-soft);
-    border-radius: 8px;
-    padding: 12px 16px;
+    background: var(--sr-bg-soft);
+    border: 1px solid var(--sr-border);
+    border-radius: var(--sr-radius);
+    padding: 0.75em 1em;
 }
-
 .sr-review-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 0.6em;
+    margin-bottom: 0.4em;
     flex-wrap: wrap;
 }
-
 .sr-review-author {
     font-weight: 700;
     font-size: 0.9em;
-    color: var(--sr-text-strong);
+    color: inherit;
 }
-
-.sr-review-stars {
-    font-size: 0.85em;
-}
-
+.sr-review-stars  { font-size: 0.85em; }
 .sr-review-date {
-    font-size: 0.75em;
-    color: var(--sr-text-subtle);
+    font-size: 0.72em;
+    color: var(--sr-text-muted);
     margin-left: auto;
 }
-
 .sr-review-text {
     font-size: 0.88em;
-    line-height: 1.6;
-    color: var(--sr-text);
+    line-height: 1.55;
+    color: inherit;
     white-space: pre-wrap;
     word-break: break-word;
 }
+.sr-review-text:empty { display: none; }
 
-.sr-review-own-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.sr-edit-btn,
-.sr-delete-btn {
-    background: none;
-    border: 1px solid var(--sr-border);
-    color: var(--sr-text-muted);
-    border-radius: 4px;
-    padding: 3px 10px;
-    cursor: pointer;
-    font-size: 0.76em;
-    transition: background 0.15s;
-    text-decoration: none;
-}
-
-.sr-edit-btn:hover {
-    background: var(--sr-surface-bg-hover);
-    color: var(--sr-text-strong);
-}
-
-.sr-delete-btn:hover {
-    background: var(--sr-danger-bg);
-    border-color: color-mix(in srgb, var(--sr-danger) 70%, transparent);
-    color: var(--sr-danger);
-}
-
-.sr-no-reviews {
-    color: var(--sr-text-subtle);
-    font-size: 0.85em;
-    font-style: italic;
-}
-
-.sr-loading {
-    color: var(--sr-text-subtle);
-    font-size: 0.85em;
-}
-
-/* ── Onglet et page d'accueil StarRating ─────────────────────────────────── */
-.sr-home-tab {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 10px;
-}
-
-.sr-home-tab-icon {
-    color: var(--sr-accent);
-    font-size: 1.15em;
-    line-height: 1;
-}
-
-.sr-home-tab-active {
-    background: var(--sr-accent) !important;
-    color: var(--sr-accent-contrast) !important;
-}
-
-.sr-home-native-inactive {
-    background: color-mix(in srgb, var(--sr-page-bg) 72%, transparent) !important;
-    color: color-mix(in srgb, var(--sr-text) 78%, transparent) !important;
-}
-
-#starrating-home-page {
-    display: none;
-}
-
-#starrating-home-page.sr-home-page-visible {
-    display: block !important;
-}
-
-.sr-home-page {
-    position: fixed;
-    top: 110px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /* Sous le menu latéral Jellyfin (~1100+) ; les clics sur l'en-tête passent à travers */
-    z-index: 100;
-    pointer-events: none;
-    overflow: auto;
-    background: var(--sr-page-bg);
-    padding: 28px 5vw 48px;
-    color: var(--sr-text);
-    box-sizing: border-box;
-}
-
-.sr-home-page > * {
-    pointer-events: auto;
-}
-
-.sr-home-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 18px;
-    align-items: flex-start;
-    margin-bottom: 18px;
-}
-
-.sr-home-header h1 {
-    margin: 0 0 6px;
-    font-size: 2rem;
-    color: var(--sr-text-strong);
-}
-
-.sr-home-header p,
-.sr-home-count,
-.sr-home-empty,
-.sr-home-loading {
-    color: var(--sr-text-muted);
-}
-
-.sr-home-pills {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-}
-
-.sr-home-pill {
-    background: var(--sr-surface-bg);
-    border: 1px solid var(--sr-border);
-    color: var(--sr-text);
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    font: inherit;
-    transition: background 0.15s, border-color 0.15s;
-}
-
-.sr-home-pill:hover {
-    background: var(--sr-surface-bg-hover);
-}
-
-.sr-home-pill-active {
-    background: var(--sr-accent);
-    border-color: var(--sr-accent);
-    color: var(--sr-accent-contrast);
-    font-weight: 700;
-}
-
-.sr-hidden {
-    display: none !important;
-}
-
-.sr-home-filters {
-    display: grid;
-    grid-template-columns: minmax(180px, 1.5fr) repeat(4, minmax(130px, 1fr));
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.sr-home-filters label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 0.78rem;
-    color: var(--sr-text-muted);
-}
-
-.sr-home-filters input,
-.sr-home-filters select {
-    background: var(--sr-surface-bg);
-    border: 1px solid var(--sr-border);
-    border-radius: 10px;
-    color: var(--sr-text-strong);
-    padding: 10px 12px;
-    font: inherit;
-}
-
-.sr-home-count {
-    margin-bottom: 14px;
-    font-size: 0.9rem;
-}
-
-.sr-rated-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 22px;
-}
-
-.sr-rated-card {
-    position: relative;
-    display: block;
-    color: inherit;
-    text-decoration: none;
-    min-width: 0;
-}
-
-.sr-rated-poster {
-    position: relative;
-    aspect-ratio: 2 / 3;
-    border-radius: 12px;
-    background-color: var(--sr-surface-bg);
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
-    transition: transform 0.15s;
-}
-
-.sr-rated-card:hover .sr-rated-poster {
-    transform: translateY(-3px);
-}
-
-.sr-rated-title {
-    margin-top: 9px;
-    color: var(--sr-text-strong);
-    font-weight: 700;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.sr-rated-meta {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 4px;
-    color: var(--sr-text-subtle);
-    font-size: 0.78rem;
-}
-
-@media (max-width: 800px) {
-    .sr-home-filters {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 560px) {
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
     #starrating-section {
-        padding: 0 12px;
+        padding: 0 0.5em;
+        margin: 1em 0;
     }
-
-    .sr-home-page {
-        padding: 18px 14px 36px;
-    }
-
-    .sr-home-header h1 {
-        font-size: 1.55rem;
-    }
-
-    .sr-home-filters {
-        grid-template-columns: 1fr;
-    }
-
-    .sr-rated-grid {
-        grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-        gap: 16px;
-    }
-
-    .sr-summary,
-    .sr-review-actions,
-    .sr-confirm-actions {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .sr-char-count,
-    .sr-summary-average-badge {
-        margin-left: 0;
-    }
+    .sr-star-slot { font-size: 1.9em; }
+    .sr-summary { padding: 0.6em 0.8em; }
+    .sr-summary .sr-avg { font-size: 1.6em; }
+    .sr-review-date { margin-left: 0; width: 100%; }
+    .sr-char-count  { margin-left: 0; }
 }
 
-/* ── Statistiques ─────────────────────────────────────────────────────────── */
-.sr-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 22px;
+@media (max-width: 380px) {
+    .sr-star-slot { font-size: 1.7em; }
+    .sr-rating-label { flex-basis: 100%; }
 }
 
-.sr-stat-card {
-    background: var(--sr-surface-bg-soft);
-    border: 1px solid var(--sr-border-soft);
-    border-radius: 12px;
-    padding: 14px 16px;
-    text-align: center;
+/* TV / très grands écrans : étoiles plus visibles depuis le canapé */
+@media (min-width: 1600px) {
+    .sr-star-slot { font-size: 1.9em; }
+    #starrating-section h2 { font-size: 1.2em; }
 }
-
-.sr-stat-value {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--sr-accent);
-}
-
-.sr-stat-label {
-    color: var(--sr-text-subtle);
-    font-size: 0.82rem;
-    margin-top: 4px;
-}
-
-.sr-stats-subtitle {
-    margin: 6px 0 12px;
-    color: var(--sr-text-strong);
-    font-size: 1.1rem;
-}
-
-.sr-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.sr-bar-row {
-    display: grid;
-    grid-template-columns: 38px 1fr 44px;
-    align-items: center;
-    gap: 10px;
-}
-
-.sr-bar-label {
-    color: var(--sr-text);
-    font-size: 0.85rem;
-    text-align: right;
-}
-
-.sr-bar-track {
-    background: var(--sr-surface-bg);
-    border-radius: 999px;
-    height: 10px;
-    overflow: hidden;
-}
-
-.sr-bar-fill {
-    background: var(--sr-accent);
-    height: 100%;
-    transition: width 0.3s;
-}
-
-.sr-bar-count {
-    color: var(--sr-text-subtle);
-    font-size: 0.85rem;
-}
-
-/* ── Outils (export / import) ─────────────────────────────────────────────── */
-.sr-data-note {
-    margin: 0 0 16px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    background: var(--sr-surface-bg);
-    border: 1px solid var(--sr-border);
-    color: var(--sr-text-muted);
-    font-size: 0.88rem;
-    line-height: 1.45;
-}
-
-.sr-tools-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-}
-
-.sr-tool-card {
-    background: var(--sr-surface-bg-soft);
-    border: 1px solid var(--sr-border-soft);
-    border-radius: 14px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sr-tool-card h3 {
-    margin: 0;
-    color: var(--sr-text-strong);
-}
-
-.sr-tool-card p {
-    color: var(--sr-text-muted);
-    font-size: 0.85rem;
-    margin: 0;
-}
-
-.sr-tool-label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    color: var(--sr-text-muted);
-    font-size: 0.85rem;
-}
-
-.sr-tool-label select,
-.sr-home-filters select {
-    background: var(--sr-surface-bg);
-    border: 1px solid var(--sr-border);
-    border-radius: 8px;
-    color: var(--sr-text);
-    padding: 8px 10px;
-    font: inherit;
-}
-
-.sr-format-toggle {
-    display: inline-flex;
-    gap: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--sr-border);
-    width: fit-content;
-}
-
-.sr-format-btn {
-    background: var(--sr-surface-bg);
-    border: none;
-    color: var(--sr-text-muted);
-    padding: 8px 16px;
-    font: inherit;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-
-.sr-format-btn + .sr-format-btn {
-    border-left: 1px solid var(--sr-border);
-}
-
-.sr-format-btn:hover {
-    background: var(--sr-surface-bg-hover);
-    color: var(--sr-text);
-}
-
-.sr-format-btn-active {
-    background: color-mix(in srgb, var(--sr-accent) 24%, transparent);
-    color: var(--sr-text-strong);
-}
-
-.sr-import-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--sr-surface-bg);
-    border: 1px dashed var(--sr-border);
-    padding: 10px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: var(--sr-text);
-}
-
-.sr-import-label input[type="file"] {
-    display: none;
-}
-
-.sr-import-mode {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--sr-text-muted);
-    font-size: 0.85rem;
-}
-
-.sr-import-mode input {
-    accent-color: var(--sr-accent);
-}
-
-/* ── Modération admin ─────────────────────────────────────────────────────── */
-.sr-admin-container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.sr-admin-card {
-    background: var(--sr-surface-bg-soft);
-    border: 1px solid var(--sr-border-soft);
-    border-radius: 10px;
-    padding: 14px 18px;
-}
-
-.sr-admin-header {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-}
-
-.sr-admin-action {
-    background: color-mix(in srgb, var(--sr-danger) 16%, transparent) !important;
-    border-color: color-mix(in srgb, var(--sr-danger) 32%, transparent) !important;
-    color: var(--sr-danger) !important;
-}
-
-/* ── Boîte de dialogue de confirmation ───────────────────────────────────── */
-.sr-confirm-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(2px);
-}
-
-.sr-confirm-modal {
-    background: var(--sr-surface-bg);
-    color: var(--sr-text-strong);
-    border-radius: 12px;
-    padding: 28px 32px;
-    min-width: 320px;
-    max-width: 90vw;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    font-family: inherit;
-}
-
-.sr-confirm-title {
-    font-size: 1.6em;
-    font-weight: 700;
-    margin-bottom: 14px;
-}
-
-.sr-confirm-text {
-    font-size: 1em;
-    margin-bottom: 24px;
-    color: var(--sr-text);
-    line-height: 1.4;
-}
-
-.sr-confirm-actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-
-.sr-confirm-btn {
-    min-width: 90px;
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-size: 0.95em;
-    font-weight: 700;
-    cursor: pointer;
-    border: 1px solid var(--sr-border);
-    background: transparent;
-    color: var(--sr-text-strong);
-    transition: background 0.15s, transform 0.05s;
-}
-
-.sr-confirm-btn:hover {
-    background: var(--sr-surface-bg-hover);
-}
-
-.sr-confirm-btn:active {
-    transform: translateY(1px);
-}
-
-.sr-confirm-ok {
-    background: color-mix(in srgb, var(--sr-danger) 72%, #7a1d1d);
-    border-color: color-mix(in srgb, var(--sr-danger) 72%, #7a1d1d);
-}
-
-.sr-confirm-ok:hover {
-    background: color-mix(in srgb, var(--sr-danger) 84%, #7a1d1d);
-}
-
-.sr-confirm-cancel {
-    background: transparent;
-}
-
-/* ── Note moyenne StarRating dans la barre d'infos ───────────────────────── */

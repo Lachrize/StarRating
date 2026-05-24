@@ -195,43 +195,49 @@
                 return;
             }
 
-            if (delBtn) delBtn.disabled = true;
-            log('DELETE rating/' + itemId);
+            // Sauve l'id de l'avis AVANT de remettre shared à zéro
+            var reviewIdToDelete = shared && shared.reviewId;
 
-            apiFetch('DELETE', 'rating/' + itemId).then(function () {
-                log('DELETE rating success');
-                var container = section.querySelector('#sr-stars-input');
-                var label = section.querySelector('#sr-rating-label');
-                var textarea  = section.querySelector('#sr-review-text');
-                var charCount = section.querySelector('#sr-char-count');
-                var submitBtn = section.querySelector('#sr-submit-review');
+            // ── UI immédiate (optimiste) — tout disparaît sans attendre le serveur
+            var container = section.querySelector('#sr-stars-input');
+            var label     = section.querySelector('#sr-rating-label');
+            var textarea  = section.querySelector('#sr-review-text');
+            var charCount = section.querySelector('#sr-char-count');
+            var submitBtn = section.querySelector('#sr-submit-review');
+            var summaryEl = section.querySelector('.sr-summary');
+            var reviewsEl = section.querySelector('#sr-reviews-list');
 
-                if (shared) {
-                    shared.reviewToken++;
-                    shared.reviewId = null;
-                    shared.currentRating = 0;
-                    shared.draftRating = 0;
-                }
+            if (shared) {
+                shared.reviewToken++;
+                shared.reviewId = null;
+                shared.currentRating = 0;
+                shared.draftRating = 0;
+            }
 
-                if (container) updateStarSlots(container, 0);
-                if (label) label.textContent = t('yourRating');
-                if (delBtn) {
-                    delBtn.style.display = 'none';
-                    delBtn.disabled = false;
-                }
-                if (textarea) textarea.value = '';
-                if (charCount) charCount.textContent = '0 / ' + pluginConfig.maxReviewLength;
-                if (submitBtn) submitBtn.textContent = t('publish');
+            if (container) updateStarSlots(container, 0);
+            if (label) label.textContent = t('yourRating');
+            if (delBtn) {
+                delBtn.style.display = 'none';
+                delBtn.disabled = false;
+            }
+            if (textarea) textarea.value = '';
+            if (charCount) charCount.textContent = '0 / ' + pluginConfig.maxReviewLength;
+            if (submitBtn) submitBtn.textContent = t('publish');
+            if (summaryEl) summaryEl.innerHTML = '<span class="sr-no-reviews">' + t('noRatings') + '</span>';
+            if (reviewsEl) reviewsEl.innerHTML = '<p class="sr-no-reviews">' + t('noReviews') + '</p>';
 
-                setCachedPosterRating(itemId, 0);
+            setCachedPosterRating(itemId, 0);
+
+            // ── Suppressions serveur en parallèle, erreurs silencieuses
+            var deleteRating = apiFetch('DELETE', 'rating/' + itemId).catch(function () {});
+            var deleteReview = reviewIdToDelete
+                ? apiFetch('DELETE', 'review/' + reviewIdToDelete).catch(function () {})
+                : Promise.resolve();
+
+            Promise.all([deleteRating, deleteReview]).then(function () {
                 refreshSummary(section, itemId);
                 renderReviews(section, itemId);
                 loadMyRatings(true);
-            }).catch(function (err) {
-                log('DELETE rating ERROR', err && (err.status || err.message || err));
-                if (delBtn) delBtn.disabled = false;
-                toast(explainError(err));
-            }).then(function () {
                 deleteRatingFlowOpen = false;
             });
         }).catch(function (err) {

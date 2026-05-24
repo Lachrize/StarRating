@@ -2,75 +2,10 @@
   {
     "guid": "a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e",
     "name": "StarRating",
-    "description": "Permet aux utilisateurs de noter les films et series avec des etoiles, de publier des commentaires et d'importer/exporter leurs donnees.",
+    "description": "Permet aux utilisateurs de noter les films et séries avec des étoiles, de publier des commentaires et d'importer/exporter leurs données.",
     "overview": "Notes et commentaires communautaires pour Jellyfin",
     "owner": "Lachrize",
     "category": "General",
-    "versions": [
-      {
-        "version": "1.0.7",
-        "changelog": "Adaptation visuelle aux themes Jellyfin et CSS personnalises (dont ElegantFin) avec variables de theme et responsive ameliore.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.7.zip",
-        "checksum": "192e8da46c91f9ff466cbcf9f38d3c8e",
-        "timestamp": "2026-05-22T09:15:00Z"
-      },
-      {
-        "version": "1.0.6",
-        "changelog": "Correction renforcee de la perte de focus pendant les recherches Jellyfin et versionnement du cache des assets web.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.6.zip",
-        "checksum": "8ca5b842f0d086a5bc344c621ca45e1a",
-        "timestamp": "2026-05-21T14:35:00Z"
-      },
-      {
-        "version": "1.0.5",
-        "changelog": "Correction de la perte de focus dans les champs de recherche et affichage de l'onglet StarRating meme sans onglet Favoris/bibliotheque.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.5.zip",
-        "checksum": "165e5e0cdb408ef0ca5ff2026ec2f7cb",
-        "timestamp": "2026-05-21T14:25:00Z"
-      },
-      {
-        "version": "1.0.4",
-        "changelog": "Correction du menu lateral sur l'onglet StarRating, clarification sur la persistance des notes (starrating.db), note dans l'onglet Outils.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.4.zip",
-        "checksum": "4f6677b471d9cb74b346888fe2b4e8e4",
-        "timestamp": "2026-05-21T14:05:00Z"
-      },
-      {
-        "version": "1.0.3",
-        "changelog": "Correction du statut Malfunctioned en declarant les assemblies gerees et en ignorant les dependances natives.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.3.zip",
-        "checksum": "8ae9427e0430bb47dcdb04078a9e56ef",
-        "timestamp": "2026-05-21T11:54:00Z"
-      },
-      {
-        "version": "1.0.2",
-        "changelog": "Correction de l'installation depuis le depot Jellyfin (checksum MD5) et inclusion des dependances requises.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.2.zip",
-        "checksum": "80aacebc34289ce3e76f6cfc40f408bd",
-        "timestamp": "2026-05-21T12:00:00Z"
-      },
-      {
-        "version": "1.0.1",
-        "changelog": "Adds automatic Jellyfin Web asset injection so users only need to add this repository URL and install the plugin.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.1.zip",
-        "checksum": "a98cbd9b735bc1b7eb82d4f550c800c9",
-        "timestamp": "2026-05-21T11:32:00Z"
-      },
-      {
-        "version": "1.0.0",
-        "changelog": "Initial public release.",
-        "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/Lachrize/StarRating/main/dist/StarRating_1.0.0.zip",
-        "checksum": "ada28bff97eb072b25b7e13218e1af13",
-        "timestamp": "2026-05-21T11:22:00Z"
-      }
-    ]
+    "versions": []
   }
 ]

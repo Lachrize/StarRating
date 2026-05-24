@@ -2,58 +2,64 @@
 
 StarRating ajoute des notes, commentaires, statistiques et exports/imports JSON/CSV dans Jellyfin.
 
+[![Latest release](https://img.shields.io/github/v/release/Lachrize/StarRating?label=version)](https://github.com/Lachrize/StarRating/releases/latest)
+[![Releases](https://img.shields.io/github/release-date/Lachrize/StarRating?label=dernière%20release)](https://github.com/Lachrize/StarRating/releases)
+
 ## Installation
 
-Dans Jellyfin : `Tableau de bord` -> `Plugins` -> `Depots` -> ajouter :
+Dans Jellyfin : `Tableau de bord` → `Plugins` → `Dépôts` → ajouter :
 
 ```text
 https://raw.githubusercontent.com/Lachrize/StarRating/main/manifest.json
 ```
 
-Si le catalogue affiche encore l'ancienne version, supprimer le depot, puis le rajouter.
+Puis installer **StarRating** depuis le catalogue des plugins et redémarrer Jellyfin.
 
-Ensuite, installer `StarRating` **version 1.0.7** (ou plus recente) depuis le catalogue des plugins, puis redemarrer Jellyfin.
+Le plugin charge automatiquement son interface web. Rien d'autre à copier.
 
-Le plugin charge automatiquement son interface web. Rien d'autre a copier.
+L'interface s'adapte aux variables de thème Jellyfin (compatible ElegantFin et autres CSS perso) et est responsive (mobile, tablette, TV, desktop).
 
-L'interface StarRating utilise les variables de theme Jellyfin quand elles sont disponibles, afin de s'adapter aux CSS personnalises comme ElegantFin.
+## Désinstallation
 
-## Ou sont stockees vos notes ?
+Désinstaller depuis l'interface Jellyfin → redémarrer Jellyfin. Le plugin retire ses propres traces de l'interface web (`index.html`) au shutdown : il ne reste rien.
 
-Le **depot** Jellyfin sert uniquement a **installer ou mettre a jour** le plugin (fichiers du plugin). Il ne contient pas vos notes.
-
-Vos notes et avis sont enregistres dans la base SQLite du serveur :
-
-```text
-<dossier de donnees Jellyfin>/starrating.db
-```
-
-Sur macOS, en general :
-
-```text
-~/Library/Application Support/jellyfin/data/starrating.db
-```
-
-**Supprimer puis rajouter le depot ne remet pas les notes a zero.** Pour repartir de zero :
-
-1. Desinstaller le plugin StarRating dans Jellyfin.
-2. Supprimer le fichier `starrating.db` (ou le renommer en sauvegarde).
-3. Redemarrer Jellyfin, puis reinstaller le plugin depuis le depot.
-
-Vous pouvez aussi exporter vos notes (onglet StarRating → Outils) avant toute suppression.
+Vos notes restent dans `<dossier de données Jellyfin>/starrating.db`. Pour repartir de zéro : supprimer ce fichier après désinstallation.
 
 ## Fonctions
 
-- Noter films et series de 0.5 a 5 etoiles.
-- Ajouter, modifier ou supprimer un commentaire.
-- Voir la moyenne sur les fiches et les affiches.
-- Retrouver tous ses medias notes dans l'onglet StarRating.
+- Noter films et séries de 0,5 à 5 étoiles (demi-étoiles).
+- Ajouter, modifier ou supprimer un avis (texte facultatif).
+- Voir la moyenne sur les fiches et badges sur les affiches.
+- Onglet StarRating regroupant tous les médias notés (filtres, statistiques, tri).
 - Importer/exporter ses notes en JSON ou CSV.
 
-## Developpement
+## Versions et release notes
 
-Prerequis : SDK .NET 9 et Jellyfin 10.11+.
+Voir [Releases sur GitHub](https://github.com/Lachrize/StarRating/releases) ou [CHANGELOG.md](CHANGELOG.md).
+
+## Développement
+
+Prérequis : SDK .NET 9 et Jellyfin 10.11+.
+
+### Build local
 
 ```bash
 dotnet build -c Release
 ```
+
+### Publier une nouvelle release
+
+```bash
+./scripts/release.sh 1.0.8
+```
+
+Le script :
+1. Bumpe la version dans `StarRating.csproj` et `Services/WebAssetInjectionService.cs`.
+2. Promeut la section `## [Unreleased]` du `CHANGELOG.md` en `## [1.0.8] - DATE`.
+3. Commit, tag `v1.0.8`, et push.
+4. Le push du tag déclenche [le workflow GitHub Actions](.github/workflows/release.yml) qui :
+   - builde le plugin,
+   - crée la GitHub Release avec le `.zip` attaché,
+   - met à jour `manifest.json` pour pointer vers la nouvelle release.
+
+Avant de release, ajouter les notes sous `## [Unreleased]` dans `CHANGELOG.md`.

@@ -13,7 +13,7 @@ public partial class WebAssetInjectionService : IHostedService
 {
     private const string StartMarker = "<!-- StarRating plugin assets start -->";
     private const string EndMarker = "<!-- StarRating plugin assets end -->";
-    private const string AssetVersion = "1.0.7";
+    private const string AssetVersion = "1.0.0";
     private readonly ILogger<WebAssetInjectionService> _logger;
 
     public WebAssetInjectionService(ILogger<WebAssetInjectionService> logger)
@@ -35,7 +35,32 @@ public partial class WebAssetInjectionService : IHostedService
         return Task.CompletedTask;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            RemoveAssets();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Unable to clean StarRating web assets from Jellyfin Web.");
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private void RemoveAssets()
+    {
+        var indexPath = FindJellyfinWebIndex();
+        if (indexPath is null) return;
+
+        var html = File.ReadAllText(indexPath);
+        var cleaned = AssetBlockRegex().Replace(html, string.Empty);
+        if (string.Equals(html, cleaned, StringComparison.Ordinal)) return;
+
+        File.WriteAllText(indexPath, cleaned);
+        _logger.LogInformation("StarRating web assets removed from {IndexPath}.", indexPath);
+    }
 
     private void InjectAssets()
     {

@@ -1,7 +1,6 @@
 bin/
 obj/
-dist/publish/
-dist/staging_*/
+dist/
 
 .vs/
 .vscode/

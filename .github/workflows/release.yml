@@ -1,0 +1,180 @@
+name: Release plugin
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (sans le préfixe v)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building version: $VERSION"
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Extract Jellyfin assemblies from official Docker image
+        run: |
+          set -euo pipefail
+          docker pull jellyfin/jellyfin:10.11.0
+          docker create --name jellyfin-tmp jellyfin/jellyfin:10.11.0
+          mkdir -p "$HOME/jellyfin-assemblies"
+          for DLL in MediaBrowser.Common MediaBrowser.Controller MediaBrowser.Model Jellyfin.Database.Implementations Jellyfin.Api; do
+            docker cp "jellyfin-tmp:/jellyfin/${DLL}.dll" "$HOME/jellyfin-assemblies/"
+          done
+          docker rm jellyfin-tmp
+          ls -la "$HOME/jellyfin-assemblies"
+
+      - name: Build plugin
+        run: |
+          dotnet publish -c Release \
+            -p:JellyfinDir="$HOME/jellyfin-assemblies" \
+            -p:AssemblyVersion=${{ steps.version.outputs.version }}.0 \
+            -p:FileVersion=${{ steps.version.outputs.version }}.0 \
+            -o dist/publish \
+            StarRating.csproj
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          BODY=""
+          if [ -f CHANGELOG.md ]; then
+            BODY=$(awk -v v="$VERSION" '
+              $0 ~ "^## \\["v"\\]" {flag=1; next}
+              flag && /^## \[/ {flag=0}
+              flag {print}
+            ' CHANGELOG.md | awk 'NF{found=1} found' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}')
+          fi
+          [ -z "$BODY" ] && BODY="Release $VERSION"
+          {
+            echo "body<<CHANGELOG_EOF"
+            echo "$BODY"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Package plugin
+        id: package
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.version.outputs.version }}"
+          STAGING="dist/staging_$VERSION"
+          ZIP_NAME="StarRating_${VERSION}.zip"
+          ZIP_PATH="dist/$ZIP_NAME"
+
+          rm -rf "$STAGING"
+          mkdir -p "$STAGING"
+          cp -R dist/publish/. "$STAGING/"
+
+          python3 <<PY
+          import json, pathlib
+          changelog = """${{ steps.changelog.outputs.body }}"""
+          meta = {
+              "guid": "a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e",
+              "name": "StarRating",
+              "description": "Notes et commentaires communautaires pour Jellyfin.",
+              "overview": "Notes et commentaires communautaires pour Jellyfin",
+              "owner": "Lachrize",
+              "category": "General",
+              "version": "$VERSION",
+              "targetAbi": "10.11.0.0",
+              "changelog": changelog,
+              "status": "Active",
+              "autoUpdate": True
+          }
+          pathlib.Path("$STAGING/meta.json").write_text(json.dumps(meta, indent=2))
+          PY
+
+          (cd "$STAGING" && zip -qr "../../$ZIP_PATH" .)
+          CHECKSUM=$(md5sum "$ZIP_PATH" | awk '{print $1}')
+
+          echo "zip_path=$ZIP_PATH" >> "$GITHUB_OUTPUT"
+          echo "zip_name=$ZIP_NAME" >> "$GITHUB_OUTPUT"
+          echo "checksum=$CHECKSUM" >> "$GITHUB_OUTPUT"
+          echo "Built $ZIP_PATH (MD5: $CHECKSUM)"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: StarRating ${{ steps.version.outputs.version }}
+          body: |
+            ${{ steps.changelog.outputs.body }}
+
+            ---
+            **MD5** : `${{ steps.package.outputs.checksum }}`
+            **Installation** : ajouter `https://raw.githubusercontent.com/${{ github.repository }}/main/manifest.json` comme dépôt Jellyfin.
+          files: ${{ steps.package.outputs.zip_path }}
+
+      - name: Update manifest.json
+        run: |
+          python3 <<PY
+          import json, pathlib, os
+          version = "${{ steps.version.outputs.version }}"
+          tag = "${{ steps.version.outputs.tag }}"
+          checksum = "${{ steps.package.outputs.checksum }}"
+          zip_name = "${{ steps.package.outputs.zip_name }}"
+          repo = "${{ github.repository }}"
+          changelog = """${{ steps.changelog.outputs.body }}"""
+
+          path = pathlib.Path("manifest.json")
+          data = json.loads(path.read_text())
+          entry = data[0] if isinstance(data, list) else data
+          versions = entry.setdefault("versions", [])
+          # Retire d'éventuels doublons
+          versions = [v for v in versions if v.get("version") != version]
+          versions.insert(0, {
+              "version": version,
+              "changelog": changelog,
+              "targetAbi": "10.11.0.0",
+              "sourceUrl": f"https://github.com/{repo}/releases/download/{tag}/{zip_name}",
+              "checksum": checksum,
+              "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          })
+          entry["versions"] = versions
+          if isinstance(data, list):
+              data[0] = entry
+          else:
+              data = entry
+          path.write_text(json.dumps(data, indent=2) + "\n")
+          PY
+
+      - name: Commit updated manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifest.json
+          if git diff --staged --quiet; then
+            echo "No manifest changes to commit."
+          else
+            git commit -m "chore: update manifest for ${{ steps.version.outputs.tag }}"
+            git push origin HEAD:main
+          fi
