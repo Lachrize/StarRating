@@ -2,10 +2,19 @@
   {
     "guid": "a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e",
     "name": "StarRating",
-    "description": "Permet aux utilisateurs de noter les films et séries avec des étoiles, de publier des commentaires et d'importer/exporter leurs données.",
+    "description": "Permet aux utilisateurs de noter les films et s\u00e9ries avec des \u00e9toiles, de publier des commentaires et d'importer/exporter leurs donn\u00e9es.",
     "overview": "Notes et commentaires communautaires pour Jellyfin",
     "owner": "Lachrize",
     "category": "General",
-    "versions": []
+    "versions": [
+      {
+        "version": "1.0.0",
+        "changelog": "Premi\u00e8re release publique. Plugin Jellyfin complet pour noter et commenter ses m\u00e9dias.\n\n### Fonctionnalit\u00e9s\n- Notation des films et s\u00e9ries de 0,5 \u00e0 5 \u00e9toiles (demi-\u00e9toiles).\n- Avis textuels facultatifs : ajout, modification, suppression.\n- Affichage de la moyenne sur les fiches d\u00e9taill\u00e9es et badges sur les affiches.\n- Onglet StarRating d\u00e9di\u00e9 regroupant tous les m\u00e9dias not\u00e9s (filtres, statistiques, tri).\n- Import / export des notes en JSON ou CSV.\n- Mod\u00e9ration : les administrateurs peuvent supprimer n'importe quel avis.\n\n### Interface\n- Adaptation automatique aux th\u00e8mes Jellyfin via variables CSS (, ) \u2014 compatible ElegantFin et autres CSS personnalis\u00e9s.\n- Responsive : optimis\u00e9 mobile (\u2264 600 px), petits t\u00e9l\u00e9phones (\u2264 380 px), tablette, desktop et TV (\u2265 1600 px).\n- \"Supprimer ma note\" supprime aussi l'avis associ\u00e9, instantan\u00e9ment (UI optimiste).\n\n### Installation\n- Installation en un lien via d\u00e9p\u00f4t Jellyfin ().\n- D\u00e9sinstallation propre : le plugin retire ses propres traces de  \u00e0 l'arr\u00eat du serveur. Aucun r\u00e9sidu apr\u00e8s d\u00e9sinstallation.\n- Cycle de release automatis\u00e9 via GitHub Actions (tag push \u2192 build + GitHub Release + mise \u00e0 jour du manifest).",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Lachrize/StarRating/releases/download/v1.0.0/StarRating_1.0.0.zip",
+        "checksum": "c6649430c884242055078de7d2144c58",
+        "timestamp": "2026-05-24T13:32:42Z"
+      }
+    ]
   }
 ]
