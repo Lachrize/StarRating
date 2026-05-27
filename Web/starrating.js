@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260522-1115';
+    var ASSET_VERSION = '20260527-1';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
@@ -927,6 +927,25 @@
     function findHomeReferenceTab() {
         if (!isOnHomePage()) return null;
 
+        // Chercher en priorité n'importe quel onglet dans la barre de navigation
+        // (indépendant de la langue ou du thème Jellyfin)
+        var navSelectors = [
+            '.headerTabs',
+            '.emby-tabs-navbar',
+            '.tabs-navbar',
+            '.mainHeaderLeft .tabs',
+            '.mainHeaderSection .tabs'
+        ];
+        for (var i = 0; i < navSelectors.length; i++) {
+            var container = document.querySelector(navSelectors[i]);
+            if (!container) continue;
+            var tabs = Array.prototype.slice.call(
+                container.querySelectorAll('button:not(.sr-home-tab), a:not(.sr-home-tab)')
+            );
+            if (tabs.length) return tabs[tabs.length - 1];
+        }
+
+        // Repli : cherche les onglets connus (FR / EN)
         var buttons = Array.prototype.slice.call(document.querySelectorAll('button, a')).filter(function (el) {
             return !el.closest('.mainDrawer, .navDrawer, .drawer, .dashboardDocument');
         });
