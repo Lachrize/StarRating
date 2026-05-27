@@ -134,19 +134,28 @@
 }
 .sr-slot-half .sr-star-half-overlay { display: block; }
 
-.sr-half-btn {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 50%;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1;
+/* Haute spécificité + !important pour passer au-dessus des resets CSS de Jellyfin */
+#starrating-section .sr-star-slot .sr-half-btn {
+    position: absolute !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 50% !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    left: auto !important;
+    right: auto !important;
+    outline: none !important;
 }
-.sr-half-btn.sr-half-left  { left: 0; }
-.sr-half-btn.sr-half-right { right: 0; }
+#starrating-section .sr-star-slot .sr-half-btn.sr-half-left  { left: 0 !important; }
+#starrating-section .sr-star-slot .sr-half-btn.sr-half-right { right: 0 !important; }
 
 .sr-rating-label {
     font-size: 0.85em;
@@ -337,18 +346,21 @@
 .sr-home-page {
     display: none;
     position: fixed;
+    top: 0;      /* JS remplace cette valeur par la hauteur du header */
     left: 0;
     right: 0;
     bottom: 0;
     overflow-y: auto;
-    z-index: 200;
-    background: var(--sr-bg);
+    z-index: 2000;
+    /* Fond solide : lit la variable si disponible, sinon sombre garanti */
+    background-color: #101010;
+    background-color: var(--background, var(--background-color, var(--theme-background, #101010)));
     color: var(--sr-text);
     font-family: inherit;
     padding: 1.5em 2em 3em;
     box-sizing: border-box;
 }
-.sr-home-page.sr-home-page-visible { display: block; }
+.sr-home-page.sr-home-page-visible { display: block !important; }
 .sr-home-page * { box-sizing: border-box; }
 
 /* ── En-tête ─────────────────────────────────────────────────────────────── */

@@ -13,7 +13,7 @@ public partial class WebAssetInjectionService : IHostedService
 {
     private const string StartMarker = "<!-- StarRating plugin assets start -->";
     private const string EndMarker = "<!-- StarRating plugin assets end -->";
-    private const string AssetVersion = "1.0.0";
+    private const string AssetVersion = "20260527-1";
     private readonly ILogger<WebAssetInjectionService> _logger;
 
     public WebAssetInjectionService(ILogger<WebAssetInjectionService> logger)
