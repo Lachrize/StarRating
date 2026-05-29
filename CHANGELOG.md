@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-05-29
+
+### Corrections
+- Détection du fond : cherche maintenant dans les éléments de contenu Jellyfin (`.homeSections`, `.mainAnimatedPage`, etc.) pour capturer les couleurs définies par un CSS personnalisé, avant de revenir sur html/body.
+
 ## [1.0.4] - 2026-05-29
 
 ### Corrections
