@@ -6,6 +6,8 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-05-29
+
 ## [1.0.1] - 2026-05-29
 
 ### Corrections
