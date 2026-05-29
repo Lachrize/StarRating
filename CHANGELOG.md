@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.9] - 2026-05-29
+
+### Corrections
+- Tab navigation : retire `emby-tab-button-active` des tabs Jellyfin natifs à l'ouverture de StarRating (et le restitue à la fermeture), pour qu'un seul tab ait l'apparence active à la fois.
+
 ## [1.0.8] - 2026-05-29
 
 ### Interface
