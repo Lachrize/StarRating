@@ -309,11 +309,11 @@
 .sr-home-page,
 .sr-confirm-overlay {
     --sr-star-color:   var(--theme-primary-color, var(--accent-color, #ffd700));
-    --sr-star-empty:   rgba(127, 127, 127, 0.45);
-    --sr-text:         var(--theme-text-color, inherit);
-    --sr-text-muted:   var(--theme-text-color-secondary, rgba(127, 127, 127, 0.85));
-    --sr-bg-soft:      var(--theme-background-secondary, rgba(127, 127, 127, 0.08));
-    --sr-border:       var(--theme-border-color, rgba(127, 127, 127, 0.2));
+    --sr-star-empty:   rgba(255, 255, 255, 0.25);
+    --sr-text:         var(--theme-text-color, #e8eaf0);
+    --sr-text-muted:   var(--theme-text-color-secondary, rgba(200, 210, 230, 0.7));
+    --sr-bg-soft:      var(--theme-background-secondary, rgba(255, 255, 255, 0.07));
+    --sr-border:       var(--theme-border-color, rgba(255, 255, 255, 0.15));
     --sr-button-bg:    var(--theme-primary-color, var(--accent-color, #ffd700));
     --sr-button-fg:    var(--theme-button-text-color, #111);
     --sr-radius:       var(--rounding, 8px);
@@ -389,8 +389,8 @@
     flex-wrap: wrap;
 }
 .sr-home-pill {
-    background: transparent;
-    border: 1px solid var(--sr-border);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 2em;
     padding: 0.4em 1.1em;
     font-size: 0.85em;
@@ -400,9 +400,9 @@
     transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .sr-home-pill:hover {
-    background: rgba(127,127,127,0.12);
+    background: rgba(255, 255, 255, 0.12);
     color: var(--sr-text);
-    border-color: rgba(127,127,127,0.4);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 .sr-home-pill.sr-home-pill-active {
     background: var(--sr-button-bg);
@@ -439,7 +439,7 @@
 }
 .sr-home-filters input[type="search"],
 .sr-home-filters select {
-    background: var(--theme-background, var(--background-color, rgba(0,0,0,0.35)));
+    background: rgba(255, 255, 255, 0.09);
     border: 1px solid var(--sr-border);
     border-radius: var(--sr-radius);
     color: inherit;
