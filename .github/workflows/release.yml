@@ -104,7 +104,7 @@ jobs:
               "overview": "Notes et commentaires communautaires pour Jellyfin",
               "owner": "Lachrize",
               "category": "General",
-              "version": "$VERSION",
+              "version": "${VERSION}.0",
               "targetAbi": "10.11.0.0",
               "changelog": changelog,
               "status": "Active",
@@ -160,9 +160,10 @@ jobs:
           entry = data[0] if isinstance(data, list) else data
           versions = entry.setdefault("versions", [])
           # Retire d'éventuels doublons
-          versions = [v for v in versions if v.get("version") != version]
+          version4 = version + ".0"
+          versions = [v for v in versions if v.get("version") != version4]
           versions.insert(0, {
-              "version": version,
+              "version": version4,
               "changelog": changelog,
               "targetAbi": "10.11.0.0",
               "sourceUrl": f"https://github.com/{repo}/releases/download/{tag}/{zip_name}",

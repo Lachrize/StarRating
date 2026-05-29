@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-05-29
+
+### Corrections
+- Corrige le bouton "Désinstaller" dans l'interface Jellyfin : la version dans `meta.json` est désormais au format `X.Y.Z.0` pour correspondre à la version de l'assembly, ce qui permet à l'API Jellyfin de retrouver le plugin lors de la désinstallation.
+
 ## [1.0.0] - 2026-05-24
 
 Première release publique. Plugin Jellyfin complet pour noter et commenter ses médias.

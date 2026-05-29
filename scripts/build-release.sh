@@ -23,7 +23,7 @@ cat > "$STAGING/meta.json" <<EOF
   "overview": "Notes et commentaires communautaires pour Jellyfin",
   "owner": "Lachrize",
   "category": "General",
-  "version": "$VERSION",
+  "version": "${VERSION}.0",
   "targetAbi": "10.11.0.0",
   "changelog": "Repository install fix and bundled dependencies.",
   "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
