@@ -187,5 +187,6 @@ jobs:
             echo "No manifest changes to commit."
           else
             git commit -m "chore: update manifest for ${{ steps.version.outputs.tag }}"
+            git pull --rebase origin main
             git push origin HEAD:main
           fi
