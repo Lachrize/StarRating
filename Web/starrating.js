@@ -1215,27 +1215,23 @@
 
     function detectJellyfinBg() {
         var notTransparent = function (c) { return c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent'; };
-        // Computed background-color (résolu, pas de var() brut) — html en premier
-        var domCandidates = [
-            document.documentElement,
-            document.body,
-            document.querySelector('.backgroundContainer'),
-            document.querySelector('.mainDrawer-scrollContainer'),
-            document.querySelector('.mainAnimatedPage'),
-            document.querySelector('.scrollY')
+        // Cherche la couleur de fond sur les éléments de contenu Jellyfin (CSS custom possible)
+        var selectors = [
+            '.homeSections', '.homeSectionsContainer', '.mainAnimatedPage',
+            '.scrollY', '.pageContainer', '.backgroundContainer',
+            '.mainDrawer-scrollContainer'
         ];
-        for (var i = 0; i < domCandidates.length; i++) {
-            if (!domCandidates[i]) continue;
-            var bg = getComputedStyle(domCandidates[i]).backgroundColor;
+        for (var i = 0; i < selectors.length; i++) {
+            var el = document.querySelector(selectors[i]);
+            if (!el) continue;
+            var bg = getComputedStyle(el).backgroundColor;
             if (notTransparent(bg)) return bg;
         }
-        // CSS custom properties brutes — seulement si ce n'est pas une valeur var() non résolue
-        var st = getComputedStyle(document.documentElement);
-        var cssVars = ['--background-color', '--background', '--theme-background', '--color-background'];
-        for (var j = 0; j < cssVars.length; j++) {
-            var v = st.getPropertyValue(cssVars[j]).trim();
-            if (v && !v.startsWith('var(') && !v.startsWith('url(')) return v;
-        }
+        // Fallback html puis body
+        var htmlBg = getComputedStyle(document.documentElement).backgroundColor;
+        if (notTransparent(htmlBg)) return htmlBg;
+        var bodyBg = getComputedStyle(document.body).backgroundColor;
+        if (notTransparent(bodyBg)) return bodyBg;
         return '#101010';
     }
 
