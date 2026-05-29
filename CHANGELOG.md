@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-05-29
+
+### Corrections
+- Améliore la détection de la couleur de fond du thème Jellyfin : vérifie maintenant l'élément `html` en premier, et filtre les valeurs CSS variables non résolues (`var(...)`).
+
 ## [1.0.3] - 2026-05-29
 
 ### Corrections
