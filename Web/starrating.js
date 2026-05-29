@@ -1255,7 +1255,21 @@
         var tab = document.querySelector('.sr-home-tab');
         if (tab) {
             tab.classList.toggle('sr-home-tab-active', visible);
-            tab.classList.toggle('emby-tab-button-active', visible);
+            if (visible) {
+                // Retirer l'état actif des tabs Jellyfin natifs pour qu'un seul tab soit actif
+                document.querySelectorAll('.emby-tab-button-active:not(.sr-home-tab)').forEach(function (el) {
+                    el.classList.remove('emby-tab-button-active');
+                    el.dataset.srWasActive = '1';
+                });
+                tab.classList.add('emby-tab-button-active');
+            } else {
+                tab.classList.remove('emby-tab-button-active');
+                // Remettre l'état actif sur les tabs natifs
+                document.querySelectorAll('[data-sr-was-active]').forEach(function (el) {
+                    el.classList.add('emby-tab-button-active');
+                    delete el.dataset.srWasActive;
+                });
+            }
         }
         setNativeHomeTabsInactive(visible);
     }
