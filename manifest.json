@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.9.0",
+        "changelog": "### Corrections\n- Tab navigation : retire  des tabs Jellyfin natifs \u00e0 l'ouverture de StarRating (et le restitue \u00e0 la fermeture), pour qu'un seul tab ait l'apparence active \u00e0 la fois.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Lachrize/StarRating/releases/download/v1.0.9/StarRating_1.0.9.zip",
+        "checksum": "78dba020b7e76e75a92eda50c87410fa",
+        "timestamp": "2026-05-29T11:55:17Z"
+      },
+      {
         "version": "1.0.8.0",
         "changelog": "### Interface\n- Onglet StarRating actif : utilise maintenant la classe Jellyfin  pour afficher le m\u00eame fond clair que les onglets natifs actifs (Accueil, Favoris).\n- Onglets natifs att\u00e9nu\u00e9s : opacit\u00e9 0.4 \u2192 0.55 pour rester lisibles sur les th\u00e8mes sombres color\u00e9s.",
         "targetAbi": "10.11.0.0",
