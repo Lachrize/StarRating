@@ -1214,24 +1214,29 @@
     }
 
     function detectJellyfinBg() {
-        var notTransparent = function (c) { return c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent'; };
-        // Cherche la couleur de fond sur les éléments de contenu Jellyfin (CSS custom possible)
+        // Extrait les canaux RGB en ignorant l'alpha (pour rendre opaque)
+        var toOpaque = function (c) {
+            var m = c && c.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+            if (!m) return null;
+            if (m[4] !== undefined && parseFloat(m[4]) < 0.5) return null; // trop transparent
+            return 'rgb(' + m[1] + ',' + m[2] + ',' + m[3] + ')';
+        };
+        // Éléments porteurs de la couleur du thème Jellyfin (drawer, footer, cartes)
         var selectors = [
-            '.homeSections', '.homeSectionsContainer', '.mainAnimatedPage',
-            '.scrollY', '.pageContainer', '.backgroundContainer',
-            '.mainDrawer-scrollContainer'
+            '.mainDrawer', '.appfooter', '.cardPadder',
+            '.mainDrawer-scrollContainer', '.backgroundContainer'
         ];
         for (var i = 0; i < selectors.length; i++) {
             var el = document.querySelector(selectors[i]);
             if (!el) continue;
-            var bg = getComputedStyle(el).backgroundColor;
-            if (notTransparent(bg)) return bg;
+            var opaque = toOpaque(getComputedStyle(el).backgroundColor);
+            if (opaque) return opaque;
         }
         // Fallback html puis body
-        var htmlBg = getComputedStyle(document.documentElement).backgroundColor;
-        if (notTransparent(htmlBg)) return htmlBg;
-        var bodyBg = getComputedStyle(document.body).backgroundColor;
-        if (notTransparent(bodyBg)) return bodyBg;
+        var htmlBg = toOpaque(getComputedStyle(document.documentElement).backgroundColor);
+        if (htmlBg) return htmlBg;
+        var bodyBg = toOpaque(getComputedStyle(document.body).backgroundColor);
+        if (bodyBg) return bodyBg;
         return '#101010';
     }
 

@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-05-29
+
+### Corrections
+- Détection du fond : cible maintenant `.mainDrawer`, `.appfooter` et `.cardPadder` (éléments porteurs de la couleur du thème) et extrait la couleur RGB de base en ignorant la transparence.
+
 ## [1.0.5] - 2026-05-29
 
 ### Corrections
