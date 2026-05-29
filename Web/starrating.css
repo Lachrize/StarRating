@@ -342,20 +342,34 @@
     right: 0;
     bottom: 0;
     overflow-y: auto;
-    z-index: 2000;
-    /* Fond solide : lit la variable si disponible, sinon sombre garanti */
+    /* En dessous du tiroir/drawer Jellyfin (999+) mais au-dessus du contenu */
+    z-index: 199;
     background-color: #101010;
     background-color: var(--background, var(--background-color, var(--theme-background, #101010)));
     color: var(--sr-text);
     font-family: inherit;
-    padding: 1.5em 2em 3em;
+    padding: 0;
     box-sizing: border-box;
 }
 .sr-home-page.sr-home-page-visible { display: block !important; }
 .sr-home-page * { box-sizing: border-box; }
 
+/* ── Contenu scrollable ──────────────────────────────────────────────────── */
+.sr-home-inner {
+    padding: 1.5em 2em 3em;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
 /* ── En-tête ─────────────────────────────────────────────────────────────── */
-.sr-home-header { margin-bottom: 1.2em; }
+.sr-home-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--sr-border);
+}
 .sr-home-header h1 {
     font-size: 1.4em;
     font-weight: 700;
@@ -363,7 +377,7 @@
     color: inherit;
 }
 .sr-home-header p {
-    font-size: 0.85em;
+    font-size: 0.82em;
     color: var(--sr-text-muted);
     margin: 0;
 }
@@ -371,22 +385,26 @@
 /* ── Navigation interne (pills) ──────────────────────────────────────────── */
 .sr-home-pills {
     display: flex;
-    gap: 0.5em;
-    margin-bottom: 1.2em;
+    gap: 0.4em;
+    margin-bottom: 1.4em;
     flex-wrap: wrap;
 }
 .sr-home-pill {
-    background: var(--sr-bg-soft);
+    background: transparent;
     border: 1px solid var(--sr-border);
     border-radius: 2em;
-    padding: 0.35em 1em;
+    padding: 0.4em 1.1em;
     font-size: 0.85em;
     font-family: inherit;
-    color: var(--sr-text);
+    color: var(--sr-text-muted);
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-.sr-home-pill:hover { background: rgba(127,127,127,0.18); }
+.sr-home-pill:hover {
+    background: rgba(127,127,127,0.12);
+    color: var(--sr-text);
+    border-color: rgba(127,127,127,0.4);
+}
 .sr-home-pill.sr-home-pill-active {
     background: var(--sr-button-bg);
     border-color: var(--sr-button-bg);
@@ -401,38 +419,52 @@
 /* ── Filtres ─────────────────────────────────────────────────────────────── */
 .sr-home-filters {
     display: flex;
-    gap: 0.75em;
+    gap: 0.6em;
     flex-wrap: wrap;
     margin-bottom: 1em;
     align-items: flex-end;
+    padding: 0.85em 1em;
+    background: var(--sr-bg-soft);
+    border: 1px solid var(--sr-border);
+    border-radius: var(--sr-radius);
 }
 .sr-home-filters label {
     display: flex;
     flex-direction: column;
-    gap: 0.25em;
-    font-size: 0.78em;
+    gap: 0.3em;
+    font-size: 0.75em;
+    font-weight: 600;
     color: var(--sr-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 .sr-home-filters input[type="search"],
 .sr-home-filters select {
-    background: var(--sr-bg-soft);
+    background: var(--theme-background, var(--background-color, rgba(0,0,0,0.35)));
     border: 1px solid var(--sr-border);
     border-radius: var(--sr-radius);
-    color: var(--sr-text);
-    padding: 0.4em 0.7em;
-    font-size: 1em;
+    color: inherit;
+    padding: 0.45em 0.75em;
+    font-size: 0.95em;
     font-family: inherit;
-    min-width: 120px;
+    min-width: 110px;
 }
 .sr-home-filters input[type="search"]:focus,
 .sr-home-filters select:focus {
     outline: none;
     border-color: var(--sr-star-color);
+    box-shadow: 0 0 0 2px rgba(255,215,0,0.15);
 }
 .sr-home-count {
-    font-size: 0.8em;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.78em;
     color: var(--sr-text-muted);
-    margin-bottom: 0.75em;
+    margin-bottom: 0.85em;
+    padding: 0.2em 0.7em;
+    background: var(--sr-bg-soft);
+    border: 1px solid var(--sr-border);
+    border-radius: 2em;
 }
 
 /* ── Grille des médias notés ─────────────────────────────────────────────── */
@@ -483,11 +515,13 @@
 /* ── États loading / vide ────────────────────────────────────────────────── */
 .sr-home-loading,
 .sr-home-empty {
-    padding: 2em;
+    padding: 3em 2em;
     text-align: center;
     color: var(--sr-text-muted);
     font-size: 0.9em;
     font-style: italic;
+    border: 1px dashed var(--sr-border);
+    border-radius: var(--sr-radius);
 }
 
 /* ── Statistiques ────────────────────────────────────────────────────────── */
@@ -762,7 +796,7 @@
 
 /* ── Responsive home page ────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-    .sr-home-page { padding: 1em 0.75em 2em; }
+    .sr-home-inner { padding: 1em 0.75em 2em; }
     .sr-rated-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
     .sr-tools-container { grid-template-columns: 1fr; }
     .sr-stats-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
@@ -775,5 +809,6 @@
     .sr-rated-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 }
 @media (min-width: 1600px) {
+    .sr-home-inner { padding: 2em 3em 4em; }
     .sr-rated-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 }
