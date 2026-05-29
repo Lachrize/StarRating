@@ -6,6 +6,11 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-05-29
+
+### Interface
+- Améliore le contraste de la page StarRating sur les thèmes sombres colorés (navy, etc.) : variables `--sr-bg-soft` et `--sr-border` basées sur blanc semi-transparent au lieu de gris, inputs/selects avec fond légèrement lumineux, pills inactives plus visibles.
+
 ## [1.0.6] - 2026-05-29
 
 ### Corrections
