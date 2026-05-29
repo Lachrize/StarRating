@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.8.0",
+        "changelog": "### Interface\n- Onglet StarRating actif : utilise maintenant la classe Jellyfin  pour afficher le m\u00eame fond clair que les onglets natifs actifs (Accueil, Favoris).\n- Onglets natifs att\u00e9nu\u00e9s : opacit\u00e9 0.4 \u2192 0.55 pour rester lisibles sur les th\u00e8mes sombres color\u00e9s.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Lachrize/StarRating/releases/download/v1.0.8/StarRating_1.0.8.zip",
+        "checksum": "d307382506c3d02f0562118ea3b3dd55",
+        "timestamp": "2026-05-29T11:49:08Z"
+      },
+      {
         "version": "1.0.7.0",
         "changelog": "### Interface\n- Am\u00e9liore le contraste de la page StarRating sur les th\u00e8mes sombres color\u00e9s (navy, etc.) : variables  et  bas\u00e9es sur blanc semi-transparent au lieu de gris, inputs/selects avec fond l\u00e9g\u00e8rement lumineux, pills inactives plus visibles.",
         "targetAbi": "10.11.0.0",
