@@ -144,10 +144,16 @@ jobs:
             **Installation** : ajouter `https://raw.githubusercontent.com/${{ github.repository }}/main/manifest.json` comme dépôt Jellyfin.
           files: ${{ steps.package.outputs.zip_path }}
 
-      - name: Update manifest.json
+      - name: Update and commit manifest
         run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Toujours partir du dernier main pour éviter tout conflit de rebase
+          git fetch origin main
+          git checkout -B manifest-update origin/main
           python3 <<PY
-          import json, pathlib, os
+          import json, pathlib
           version = "${{ steps.version.outputs.version }}"
           tag = "${{ steps.version.outputs.tag }}"
           checksum = "${{ steps.package.outputs.checksum }}"
@@ -159,7 +165,6 @@ jobs:
           data = json.loads(path.read_text())
           entry = data[0] if isinstance(data, list) else data
           versions = entry.setdefault("versions", [])
-          # Retire d'éventuels doublons
           version4 = version + ".0"
           versions = [v for v in versions if v.get("version") != version4]
           versions.insert(0, {
@@ -177,16 +182,10 @@ jobs:
               data = entry
           path.write_text(json.dumps(data, indent=2) + "\n")
           PY
-
-      - name: Commit updated manifest
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add manifest.json
           if git diff --staged --quiet; then
             echo "No manifest changes to commit."
           else
             git commit -m "chore: update manifest for ${{ steps.version.outputs.tag }}"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            git push origin manifest-update:main
           fi
