@@ -6,6 +6,12 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-05-29
+
+### Corrections
+- Corrige l'affichage des demi-étoiles dans le widget de notation : le clip était calculé sur la largeur du slot (1,7 em) au lieu du caractère étoile (1 em), ce qui rendait la demi-étoile visuellement pleine.
+- Corrige la couleur de fond de la page StarRating pour qu'elle s'adapte dynamiquement au thème Jellyfin actif (lecture de la vraie valeur calculée du DOM au lieu de variables CSS qui ne matchaient pas tous les thèmes).
+
 ## [1.0.2] - 2026-05-29
 
 ## [1.0.1] - 2026-05-29

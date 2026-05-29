@@ -125,8 +125,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
-    overflow: hidden;
+    width: 1em;
+    clip-path: inset(0 50% 0 0);
     line-height: 1;
     color: var(--sr-star-color);
     user-select: none;
@@ -344,8 +344,7 @@
     overflow-y: auto;
     /* En dessous du tiroir/drawer Jellyfin (999+) mais au-dessus du contenu */
     z-index: 199;
-    background-color: #101010;
-    background-color: var(--background, var(--background-color, var(--theme-background, #101010)));
+    background-color: var(--background-color, var(--background, var(--theme-background, #101010)));
     color: var(--sr-text);
     font-family: inherit;
     padding: 0;

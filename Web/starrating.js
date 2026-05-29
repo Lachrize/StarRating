@@ -1213,10 +1213,29 @@
         return Math.ceil(bottom) || 110;
     }
 
+    function detectJellyfinBg() {
+        var root = document.documentElement;
+        var st = getComputedStyle(root);
+        var vars = ['--background-color', '--background', '--theme-background', '--color-background'];
+        for (var i = 0; i < vars.length; i++) {
+            var v = st.getPropertyValue(vars[i]).trim();
+            if (v) return v;
+        }
+        var candidates = ['.mainAnimatedPage', '.scrollY', 'body'];
+        for (var j = 0; j < candidates.length; j++) {
+            var el = document.querySelector(candidates[j]);
+            if (!el) continue;
+            var bg = getComputedStyle(el).backgroundColor;
+            if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') return bg;
+        }
+        return '#101010';
+    }
+
     function updateHomeLayout() {
         var section = document.getElementById('starrating-home-page');
         if (!section) return;
         section.style.top = getAppChromeBottom() + 'px';
+        section.style.backgroundColor = detectJellyfinBg();
     }
 
     function setHomeVisible(visible) {
