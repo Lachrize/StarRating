@@ -330,8 +330,8 @@
 .sr-home-tab.sr-home-tab-active { opacity: 1; }
 .sr-home-tab-icon { margin-right: 0.3em; }
 
-/* Tabs natifs grisés quand StarRating est ouvert */
-.sr-home-native-inactive { opacity: 0.4; }
+/* Tabs natifs atténués quand StarRating est ouvert */
+.sr-home-native-inactive { opacity: 0.55; }
 
 /* ── Page d'accueil StarRating (overlay plein-écran) ─────────────────────── */
 .sr-home-page {
