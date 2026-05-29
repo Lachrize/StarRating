@@ -17,7 +17,7 @@
 
     var PLUGIN_ID = 'a4df60c5-6b46-4ce4-b6b7-d95a75b25c9e';
     var STAR_FULL = '★';
-    var ASSET_VERSION = '20260527-1';
+    var ASSET_VERSION = '20260527-2';
     var DEBUG = false;
     var deleteRatingFlowOpen = false;
 
