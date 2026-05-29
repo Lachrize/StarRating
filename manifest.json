@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.7.0",
+        "changelog": "### Interface\n- Am\u00e9liore le contraste de la page StarRating sur les th\u00e8mes sombres color\u00e9s (navy, etc.) : variables  et  bas\u00e9es sur blanc semi-transparent au lieu de gris, inputs/selects avec fond l\u00e9g\u00e8rement lumineux, pills inactives plus visibles.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Lachrize/StarRating/releases/download/v1.0.7/StarRating_1.0.7.zip",
+        "checksum": "67a4fde6180c1fdfb32142834875ad70",
+        "timestamp": "2026-05-29T11:42:54Z"
+      },
+      {
         "version": "1.0.6.0",
         "changelog": "### Corrections\n- D\u00e9tection du fond : cible maintenant ,  et  (\u00e9l\u00e9ments porteurs de la couleur du th\u00e8me) et extrait la couleur RGB de base en ignorant la transparence.",
         "targetAbi": "10.11.0.0",
