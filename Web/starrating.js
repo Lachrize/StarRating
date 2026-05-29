@@ -1214,19 +1214,27 @@
     }
 
     function detectJellyfinBg() {
-        var root = document.documentElement;
-        var st = getComputedStyle(root);
-        var vars = ['--background-color', '--background', '--theme-background', '--color-background'];
-        for (var i = 0; i < vars.length; i++) {
-            var v = st.getPropertyValue(vars[i]).trim();
-            if (v) return v;
+        var notTransparent = function (c) { return c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent'; };
+        // Computed background-color (résolu, pas de var() brut) — html en premier
+        var domCandidates = [
+            document.documentElement,
+            document.body,
+            document.querySelector('.backgroundContainer'),
+            document.querySelector('.mainDrawer-scrollContainer'),
+            document.querySelector('.mainAnimatedPage'),
+            document.querySelector('.scrollY')
+        ];
+        for (var i = 0; i < domCandidates.length; i++) {
+            if (!domCandidates[i]) continue;
+            var bg = getComputedStyle(domCandidates[i]).backgroundColor;
+            if (notTransparent(bg)) return bg;
         }
-        var candidates = ['.mainAnimatedPage', '.scrollY', 'body'];
-        for (var j = 0; j < candidates.length; j++) {
-            var el = document.querySelector(candidates[j]);
-            if (!el) continue;
-            var bg = getComputedStyle(el).backgroundColor;
-            if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') return bg;
+        // CSS custom properties brutes — seulement si ce n'est pas une valeur var() non résolue
+        var st = getComputedStyle(document.documentElement);
+        var cssVars = ['--background-color', '--background', '--theme-background', '--color-background'];
+        for (var j = 0; j < cssVars.length; j++) {
+            var v = st.getPropertyValue(cssVars[j]).trim();
+            if (v && !v.startsWith('var(') && !v.startsWith('url(')) return v;
         }
         return '#101010';
     }
