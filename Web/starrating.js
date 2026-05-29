@@ -1253,7 +1253,10 @@
         section.classList.toggle('sr-home-page-visible', visible);
 
         var tab = document.querySelector('.sr-home-tab');
-        if (tab) tab.classList.toggle('sr-home-tab-active', visible);
+        if (tab) {
+            tab.classList.toggle('sr-home-tab-active', visible);
+            tab.classList.toggle('emby-tab-button-active', visible);
+        }
         setNativeHomeTabsInactive(visible);
     }
 

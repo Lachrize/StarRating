@@ -6,6 +6,12 @@ versioning selon [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.0.8] - 2026-05-29
+
+### Interface
+- Onglet StarRating actif : utilise maintenant la classe Jellyfin `emby-tab-button-active` pour afficher le même fond clair que les onglets natifs actifs (Accueil, Favoris).
+- Onglets natifs atténués : opacité 0.4 → 0.55 pour rester lisibles sur les thèmes sombres colorés.
+
 ## [1.0.7] - 2026-05-29
 
 ### Interface
