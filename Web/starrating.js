@@ -452,7 +452,7 @@
             '<div class="sr-review-form" id="sr-review-form">' +
                 '<textarea id="sr-review-text" maxlength="' + pluginConfig.maxReviewLength + '" placeholder="' + t('placeholderReview') + '"></textarea>' +
                 '<div class="sr-review-actions">' +
-                    '<button class="sr-submit-btn" id="sr-submit-review">' + t('publish') + '</button>' +
+                    '<button type="button" class="sr-submit-btn" id="sr-submit-review">' + t('publish') + '</button>' +
                     '<span class="sr-char-count" id="sr-char-count">0 / ' + pluginConfig.maxReviewLength + '</span>' +
                 '</div>' +
             '</div>' +
@@ -496,6 +496,7 @@
             right.dataset.value = i;
 
             [left, right].forEach(function (btn) {
+                btn.type = 'button';
                 var val = parseFloat(btn.dataset.value);
                 btn.addEventListener('mouseover', function () { updateStarSlots(container, val); });
                 btn.addEventListener('mouseout',  function () { updateStarSlots(container, shared.draftRating); });
@@ -503,6 +504,20 @@
                     shared.draftRating = val;
                     updateStarSlots(container, val);
                     label.textContent = t('yourRatingValue', val);
+
+                    // Auto-save immédiat — l'utilisateur n'a pas besoin de cliquer Publier
+                    apiFetch('POST', 'rating', { itemId: itemId, rating: val }).then(function () {
+                        shared.currentRating = val;
+                        setCachedPosterRating(itemId, val);
+                        if (delBtn) delBtn.style.display = 'inline-block';
+                        refreshSummary(section, itemId);
+                        loadMyRatings(true);
+                    }).catch(function (err) {
+                        toast(explainError(err));
+                        shared.draftRating = shared.currentRating;
+                        updateStarSlots(container, shared.currentRating);
+                        label.textContent = shared.currentRating > 0 ? t('yourRatingValue', shared.currentRating) : t('yourRating');
+                    });
                 });
             });
 
@@ -1025,7 +1040,7 @@
 
         var adminTab = '';
 
-        return '' +
+        return '<div class="sr-home-inner">' +
             '<div class="sr-home-header">' +
                 '<div>' +
                     '<h1>' + t('homeTitle') + '</h1>' +
@@ -1100,7 +1115,7 @@
                 '</div>' +
             '</section>' +
 
-            '';
+            '</div>';
     }
 
     function bindHomePageEvents(section) {
