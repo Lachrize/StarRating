@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.0.4.0",
+        "changelog": "### Corrections\n- Am\u00e9liore la d\u00e9tection de la couleur de fond du th\u00e8me Jellyfin : v\u00e9rifie maintenant l'\u00e9l\u00e9ment  en premier, et filtre les valeurs CSS variables non r\u00e9solues ().",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Lachrize/StarRating/releases/download/v1.0.4/StarRating_1.0.4.zip",
+        "checksum": "c9f83d0fd7df6db10bb89eddb6908771",
+        "timestamp": "2026-05-29T11:13:24Z"
+      },
+      {
         "version": "1.0.3.0",
         "changelog": "### Corrections\n- Corrige l'affichage des demi-\u00e9toiles dans le widget de notation : le clip \u00e9tait calcul\u00e9 sur la largeur du slot (1,7 em) au lieu du caract\u00e8re \u00e9toile (1 em), ce qui rendait la demi-\u00e9toile visuellement pleine.\n- Corrige la couleur de fond de la page StarRating pour qu'elle s'adapte dynamiquement au th\u00e8me Jellyfin actif (lecture de la vraie valeur calcul\u00e9e du DOM au lieu de variables CSS qui ne matchaient pas tous les th\u00e8mes).",
         "targetAbi": "10.11.0.0",
